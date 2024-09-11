@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -13,6 +14,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { clubData } from "@/modules/clubs/api.jsx";
 import { CardsCustom } from "@/components/cards";
 import { UpcomingMatch } from "@/components/upcomingMatch";
+import { Header } from "../../../components/ui/header";
 
 const Stadium = ({ club }) => {
   return (
@@ -24,223 +26,227 @@ const Stadium = ({ club }) => {
         backgroundSize: "cover", // Asegura que la imagen cubra toda la sección
         backgroundPosition: "center", // Centra la imagen
         backgroundRepeat: "no-repeat", // Evita que la imagen se repita
-        color: `${club.colors.primary}`,
+        color: `${club.colors?.headerTextColor}`,
       }}
     >
       <div className="container mx-auto px-4 text-center">
-        <h1 className="text-4xl md:text-6xl font-bold mb-4">{club.fullName}</h1>
-        <p className="text-xl mb-8">
-          Home of the{" "}
-          {club.name === "Boca Juniors" ? "Xeneizes" : "White Kings"}
-        </p>
-        <Button className="bg-white text-black hover:bg-gray-200">
-          Learn More
-        </Button>
+        <h1 className="text-4xl md:text-6xl font-bold mb-4 textransform-">
+          {club.fullName}
+        </h1>
       </div>
     </section>
   );
 };
-// type ClubKey = keyof typeof clubData;
 
 export default function ClubList() {
-  const [currentClub, setCurrentClub] = useState<ClubKey>("bocaJuniors");
+  const { clubName } = useParams();
+  const [currentClub, setCurrentClub] = useState(null);
+
+  useEffect(() => {
+    if (clubName) {
+      setCurrentClub(clubName);
+    }
+  }, [clubName]);
+
   const club = clubData[currentClub];
 
-  const switchClub = () => {
-    setCurrentClub(currentClub === "bocaJuniors" ? "lduQuito" : "bocaJuniors");
-  };
-
   if (!club) return <div>Loading...</div>;
-
   return (
-    <div
-      className="flex flex-col min-h-screen"
-      style={{ backgroundColor: club.colors.primary, color: club.colors.text }}
-    >
-      <header
-        className="py-4"
-        style={{
-          backgroundColor: club.colors.tertiary
-            ? club.colors.tertiary
-            : club.colors.secondary,
-        }}
-      >
-        <div className="container mx-auto px-4 flex justify-between items-center">
-          <div className="flex items-center space-x-2">
-            <img
-              src={club.logo}
-              alt={`${club.name} Logo`}
-              width={50}
-              height={50}
-              className="rounded-full"
-            />
-            <span
-              style={{ color: club.colors.headerTextColor }}
-              className="text-xl font-bold"
-            >
-              {club.name}
-            </span>
-          </div>
-
-          <Button onClick={switchClub} variant="outline">
-            Switch to{" "}
-            {currentClub === "bocaJuniors" ? "LDU Quito" : "Boca Juniors"}
-          </Button>
-        </div>
-      </header>
-      {/* <Stadium club={club} /> */}
+    <Header>
       <div
+        className="flex flex-col min-h-screen"
         style={{
-          background: club.colors.primary,
-          padding: "5rem",
+          backgroundColor: club.colors.primary,
+          color: club.colors.text,
         }}
       >
-        <UpcomingMatch club={club} />
-      </div>
-
-      <main
-        className="flex-grow"
-        style={{ backgroundColor: club.colors.primary }}
-      >
-        <section
-          id="statistics"
-          className="py-16"
-          style={{ backgroundColor: club.colors.secondary }}
+        <header
+          className="py-4"
+          style={{
+            backgroundColor: club.colors.tertiary
+              ? club.colors.tertiary
+              : club.colors.secondary,
+            padding: "5px",
+          }}
         >
-          <div className="container mx-auto px-4">
-            <div className="flex justify-evenly items-center gap-4 mb-5 border-2 border-red-500">
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-center">
-                {club?.currentLeague?.name}
+          <div className="container mx-auto px-4 flex justify-between items-center">
+            <div className="flex items-center space-x-2">
+              <img
+                src={club.logo}
+                alt={`${club.name} Logo`}
+                width={50}
+                height={50}
+              />
+              <span
+                style={{
+                  color: club.colors.headerTextColor,
+                  textTransform: "uppercase",
+                }}
+                className="text-xl font-bold"
+              >
+                {club.name}
+              </span>
+            </div>
+          </div>
+        </header>
+        <Stadium club={club} />
+        <div
+          style={{
+            background: club.colors.primary,
+            padding: "5rem",
+          }}
+        >
+          <UpcomingMatch club={club} />
+        </div>
+
+        <main
+          className="flex-grow"
+          style={{ backgroundColor: club.colors.primary }}
+        >
+          <section
+            id="statistics"
+            className="py-16"
+            style={{ backgroundColor: club.colors.secondary }}
+          >
+            <div className="container mx-auto px-4">
+              <div className="flex justify-evenly items-center gap-4 mb-5">
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-center">
+                  {club?.currentLeague?.name}
+                </h2>
+                <div className="flex justify-center items-center w-20 h-20">
+                  <img
+                    src={club?.currentLeague?.logo}
+                    alt={club.currentLeague?.name}
+                  />
+                </div>
+                <h2
+                  className="text-xl sm:text-2xl md:text-3xl font-bold text-center"
+                  style={{ padding: "10px" }}
+                >
+                  FECHA 14
+                </h2>
+              </div>
+              <CardsCustom club={club} />
+            </div>
+          </section>
+
+          <section id="team" className="py-16">
+            <div className="container mx-auto px-4">
+              <h2
+                className="text-3xl font-bold mb-8 text-center"
+                style={{ color: `${club.colors.secondary}` }}
+              >
+                TEMPORADA 23/24
               </h2>
-              <div className="flex justify-center items-center w-20 h-20 border-2 border-red-500">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {club.players.map((player, index) => (
+                  <Card
+                    key={index}
+                    style={{
+                      background: `${club.colors.secondary}`,
+                      color: `${club.colors.primary}`,
+                    }}
+                  >
+                    <CardContent className="p-4">
+                      <img
+                        src={player.img}
+                        alt={player.name}
+                        width={150}
+                        height={100}
+                        className="rounded-full mx-auto mb-4"
+                      />
+                      <h3 className="text-lg font-semibold text-center">
+                        {player.name}
+                      </h3>
+                      <p className="text-center text-gray-600">
+                        {player.position}
+                      </p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          </section>
+          <section
+            id="history"
+            className="py-16"
+            style={{ backgroundColor: club.colors.secondary }}
+          >
+            <div className="container mx-auto px-4">
+              <h2 className="text-3xl font-bold mb-8 text-center">
+                Breve Historia del Club
+              </h2>
+              <Tabs defaultValue="domestic" className="w-full">
+                <TabsList className="grid w-full grid-cols-2">
+                  <TabsTrigger value="domestic">Títulos Locales</TabsTrigger>
+                  <TabsTrigger value="international">
+                    Títulos Internacionales
+                  </TabsTrigger>
+                </TabsList>
+                <TabsContent value="domestic">
+                  <ul className="list-disc pl-6">
+                    {club.trophies.domestic.map((trophy, index) => (
+                      <li key={index}>{trophy}</li>
+                    ))}
+                  </ul>
+                </TabsContent>
+                <TabsContent value="international">
+                  <ul className="list-disc pl-6">
+                    {club.trophies.international.map((trophy, index) => (
+                      <li key={index}>{trophy}</li>
+                    ))}
+                  </ul>
+                </TabsContent>
+              </Tabs>
+            </div>
+          </section>
+
+          <section id="about" className="py-16">
+            <div className="container mx-auto px-4">
+              <h2 className="text-3xl font-bold mb-8 text-center">
+                {club.name}
+              </h2>
+              <div className="grid md:grid-cols-2 gap-8 items-center">
+                <div>
+                  <p className="mb-4">
+                    {club.fullName}, conocido comúnmente como {club.name}, es un
+                    club de fútbol profesional con sede en
+                    {club.name === "Boca Juniors"
+                      ? " Buenos Aires, Argentina"
+                      : " Quito, Ecuador"}
+                    . Fundado en {club.founded}, es uno de los clubes más
+                    exitosos en la historia del fútbol{" "}
+                    {club.name === "Boca Juniors" ? "argentino" : "ecuatoriano"}
+                    .
+                  </p>
+                  <p>
+                    {club.name} juega sus partidos en casa en{" "}
+                    {club?.stadium?.name}, que es conocido por su apasionada
+                    atmósfera y se considera uno de los estadios más icónicos de
+                    Sudamérica.
+                  </p>
+                </div>
+
                 <img
-                  src={club?.currentLeague?.logo}
-                  alt={club.currentLeague?.name}
+                  src={club.stadium.img}
+                  alt={`${club.stadium}`}
+                  width={400}
+                  height={300}
+                  className="rounded-lg shadow-lg"
                 />
               </div>
-              <h2
-                className="text-xl sm:text-2xl md:text-3xl font-bold text-center"
-                style={{ border: "2px solid", padding: "10px" }}
-              >
-                FECHA 14
-              </h2>
             </div>
-            <CardsCustom club={club} />
-          </div>
-        </section>
+          </section>
+        </main>
 
-        <section id="team" className="py-16">
-          <div className="container mx-auto px-4">
-            <h2
-              className="text-3xl font-bold mb-8 text-center"
-              style={{ color: "#ffd700" }}
-            >
-              TEMPORADA 23/24
-            </h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {club.players.map((player, index) => (
-                <Card
-                  key={index}
-                  style={{ background: `${club.colors.secondary}` }}
-                >
-                  <CardContent className="p-4">
-                    <img
-                      src={player.img}
-                      alt={player.name}
-                      width={150}
-                      height={100}
-                      className="rounded-full mx-auto mb-4"
-                    />
-                    <h3 className="text-lg font-semibold text-center">
-                      {player.name}
-                    </h3>
-                    <p className="text-center text-gray-600">
-                      {player.position}
-                    </p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
-        <section
-          id="history"
-          className="py-16"
+        <footer
+          className="py-8"
           style={{ backgroundColor: club.colors.secondary }}
         >
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold mb-8 text-center">
-              Club History
-            </h2>
-            <Tabs defaultValue="domestic" className="w-full">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="domestic">Domestic Titles</TabsTrigger>
-                <TabsTrigger value="international">
-                  International Titles
-                </TabsTrigger>
-              </TabsList>
-              <TabsContent value="domestic">
-                <ul className="list-disc pl-6">
-                  {club.trophies.domestic.map((trophy, index) => (
-                    <li key={index}>{trophy}</li>
-                  ))}
-                </ul>
-              </TabsContent>
-              <TabsContent value="international">
-                <ul className="list-disc pl-6">
-                  {club.trophies.international.map((trophy, index) => (
-                    <li key={index}>{trophy}</li>
-                  ))}
-                </ul>
-              </TabsContent>
-            </Tabs>
-          </div>
-        </section>
-
-        <section id="about" className="py-16">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold mb-8 text-center">
-              About {club.name}
-            </h2>
-            <div className="grid md:grid-cols-2 gap-8 items-center">
-              <div>
-                <p className="mb-4">
-                  {club.fullName}, commonly known as {club.name}, is a
-                  professional football club based in
-                  {club.name === "Boca Juniors"
-                    ? " Buenos Aires, Argentina"
-                    : " Quito, Ecuador"}
-                  . Founded on {club.founded}, it is one of the most successful
-                  clubs in{" "}
-                  {club.name === "Boca Juniors" ? "Argentine" : "Ecuadorian"}{" "}
-                  football history.
-                </p>
-                <p>
-                  {club.name} plays its home games at {club?.stadium?.name},
-                  which is renowned for its passionate atmosphere and is
-                  considered one of the most iconic stadiums in South America.
-                </p>
-              </div>
-              <img
-                src={club.stadium.img}
-                alt={`${club.stadium}`}
-                width={400}
-                height={300}
-                className="rounded-lg shadow-lg"
-              />
-            </div>
-          </div>
-        </section>
-      </main>
-
-      <footer
-        className="py-8"
-        style={{ backgroundColor: club.colors.secondary }}
-      >
-        <div className="container mx-auto px-4 text-center">
-          <p>&copy; 2023 {club.name}. All rights reserved.</p>
-          <div className="flex justify-center space-x-4 mt-4">
-            {/* <Link href="#" className="hover:text-blue-400">
+          <div className="container mx-auto px-4 text-center">
+            <p>&copy; 2023 {club.name}. All rights reserved.</p>
+            <div className="flex justify-center space-x-4 mt-4">
+              {/* <Link href="#" className="hover:text-blue-400">
               <TwitterIcon className="h-6 w-6" />
             </Link>
             <Link href="#" className="hover:text-blue-400">
@@ -249,10 +255,11 @@ export default function ClubList() {
             <Link href="#" className="hover:text-blue-400">
               <InstagramIcon className="h-6 w-6" />
             </Link> */}
+            </div>
           </div>
-        </div>
-      </footer>
-    </div>
+        </footer>
+      </div>
+    </Header>
   );
 }
 

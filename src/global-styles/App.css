@@ -5,7 +5,6 @@
 #root {
   margin: 0 auto;
   /* text-align: center; */
-  border: 2px solid red;
 }
 
 .logo {
@@ -13,7 +12,6 @@
   padding: 1em;
   will-change: filter;
   transition: filter 300ms;
-  border: 1px solid rgb(0, 0, 0);
   background-color: #d00;
 }
 .logo:hover {

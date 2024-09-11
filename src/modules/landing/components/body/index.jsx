@@ -105,10 +105,10 @@ export function EnhancedFootballStandings() {
   ];
 
   const topPlayers = [
-    { name: "Lionel Messi", team: "FC Barcelona", goals: 30 },
-    { name: "Karim Benzema", team: "Real Madrid", goals: 27 },
-    { name: "Gerard Moreno", team: "Villarreal", goals: 23 },
-    { name: "Luis Suárez", team: "Atlético Madrid", goals: 21 },
+    { name: "Paolo Guerrero", team: "LDU Quito", goals: 30 },
+    { name: "Oscar Quiñónez", team: "Orense", goals: 27 },
+    { name: "Jhon Ontaneda", team: "Aucas", goals: 23 },
+    { name: "Alex Rangel", team: "Barcelona SC", goals: 21 },
   ];
 
   return (

@@ -17,7 +17,7 @@ const CardLeaguePosition = ({ club }) => {
       className="p-6 flex flex-col h-full"
       style={{
         backgroundColor: club.colors.colorPositionLeague,
-        color: club.colors.secondary,
+        color: club.colors.colorTextPositionLeague,
         border: "none",
       }}
     >
@@ -113,9 +113,15 @@ const CardTopScorer = ({ player }) => {
 
 const CardRecent = ({ club }) => {
   return (
-    <Card style={{ backgroundColor: "white", color: "black  " }}>
+    <Card
+      style={{
+        backgroundColor: club.colors.analyticsBG,
+        color: club.colors.analyticsC,
+        border: "none",
+      }}
+    >
       <CardHeader>
-        <CardTitle>Recent Form</CardTitle>
+        <CardTitle>ANALYTICS</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="flex space-x-1">
@@ -141,9 +147,15 @@ const CardRecent = ({ club }) => {
 
 const CardLastMatchs = ({ club }) => {
   return (
-    <Card style={{ backgroundColor: "white", color: "black  " }}>
+    <Card
+      style={{
+        backgroundColor: club.colors.lastMatchesBG,
+        color: club.colors.lastMatchesC,
+        border: "none",
+      }}
+    >
       <CardHeader>
-        <CardTitle>Last 5 Matches</CardTitle>
+        <CardTitle>ULT 5 PARTIDOS</CardTitle>
       </CardHeader>
       <CardContent>
         <Table>

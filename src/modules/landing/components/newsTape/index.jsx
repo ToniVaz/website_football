@@ -9,7 +9,7 @@ const NewsTape = () => {
           <span className="live-text">EN VIVO:</span>
           ARGENTINA VS. CHILE | ASÍ FUE EL EMOTIVO HOMENAJE A DI MARÍA |
           CRISTIANO ANOTÓ SU GOL 900 | QUÉ FALTA PARA LA FIRMA DE MUNJAIN |
-          PARTIDOS DE HOY
+        ELIMINATORIAS 26
         </p>
       </div>
     </div>

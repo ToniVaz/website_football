@@ -5,7 +5,7 @@ import ClubList from "../page/index.jsx";
 export const ClubRoute = () => {
   return (
     <Routes>
-      <Route path="/club/:clubID" element={<ClubList />} />
+      <Route path="/club/:clubName" element={<ClubList />} />
     </Routes>
   );
 };
