@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import {
   Card,
@@ -31,6 +32,7 @@ interface RecentResult {
 }
 
 interface Club {
+  topScorer: { name: any; img: any; goals: any; colors: any; season: any; };
   colors: ClubColors;
   currentLeague: {
     position: number;
@@ -73,6 +75,7 @@ const CardLeaguePosition: React.FC<{ club: Club }> = ({ club }) => {
 
 const CardTopScorer: React.FC<{ club: Club }> = ({ club }) => {
   const { name, img, goals, colors, season } = club.topScorer;
+  console.log(club);
 
   return (
     <Card
