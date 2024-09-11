@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import ClubList from "../page/index.tsx";
+import ClubList from "../page/index.jsx";
 
 export const ClubRoute = () => {
   return (

@@ -40,7 +40,7 @@ const Stadium = ({ club }) => {
     </section>
   );
 };
-type ClubKey = keyof typeof clubData;
+// type ClubKey = keyof typeof clubData;
 
 export default function ClubList() {
   const [currentClub, setCurrentClub] = useState<ClubKey>("bocaJuniors");
