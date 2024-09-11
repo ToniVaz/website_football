@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Card,
   CardContent,
@@ -9,9 +10,37 @@ import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Trophy } from "lucide-react";
 
-// Datos de los jugadores
+// Definición de interfaces
 
-const CardLeaguePosition = ({ club }) => {
+interface ClubColors {
+  colorPositionLeague: string;
+  colorTextPositionLeague: string;
+  primary: string;
+  textScorer: string;
+  secondary: string;
+  tertiary: string;
+  analyticsBG: string;
+  analyticsC: string;
+  lastMatchesBG: string;
+  lastMatchesC: string;
+}
+
+interface RecentResult {
+  result: string;
+  opponent: string;
+}
+
+interface Club {
+  colors: ClubColors;
+  currentLeague: {
+    position: number;
+  };
+  recentResults: RecentResult[];
+}
+
+// Componentes
+
+const CardLeaguePosition: React.FC<{ club: Club }> = ({ club }) => {
   return (
     <Card
       className="p-6 flex flex-col h-full"
@@ -33,7 +62,7 @@ const CardLeaguePosition = ({ club }) => {
             alignItems: "center",
           }}
         >
-          <p className="text-7xl  sm:text-7xl  md:text-9xl lg:text-9xl font-bold">
+          <p className="text-7xl sm:text-7xl md:text-9xl lg:text-9xl font-bold">
             {club.currentLeague.position}
           </p>
         </div>
@@ -42,8 +71,8 @@ const CardLeaguePosition = ({ club }) => {
   );
 };
 
-const CardTopScorer = ({ player }) => {
-  const { name, img, goals, colors, season } = player?.topScorer;
+const CardTopScorer: React.FC<{ club: Club }> = ({ club }) => {
+  const { name, img, goals, colors, season } = club.topScorer;
 
   return (
     <Card
@@ -57,7 +86,7 @@ const CardTopScorer = ({ player }) => {
         border: "none",
       }}
     >
-      <div className=" relative h-64 overflow-hidden">
+      <div className="relative h-64 overflow-hidden">
         <img
           src={img}
           alt={`${name} - Top Scorer`}
@@ -82,7 +111,7 @@ const CardTopScorer = ({ player }) => {
         <div>
           <h3
             className="text-2xl sm:text-3xl font-bold mb-2"
-            style={{ color: colors.textName }}
+            style={{ color: colors.secondary }}
           >
             {name}
           </h3>
@@ -111,7 +140,7 @@ const CardTopScorer = ({ player }) => {
   );
 };
 
-const CardRecent = ({ club }) => {
+const CardRecent: React.FC<{ club: Club }> = ({ club }) => {
   return (
     <Card
       style={{
@@ -145,7 +174,7 @@ const CardRecent = ({ club }) => {
   );
 };
 
-const CardLastMatchs = ({ club }) => {
+const CardLastMatchs: React.FC<{ club: Club }> = ({ club }) => {
   return (
     <Card
       style={{
@@ -173,12 +202,11 @@ const CardLastMatchs = ({ club }) => {
   );
 };
 
-export const CardsCustom = ({ club }) => {
+export const CardsCustom: React.FC<{ club: Club }> = ({ club }) => {
   return (
-    // <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-    <div className="grid grid-cols-1  sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2  xl:grid-cols-4  2xl:grid-cols-4 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-4 gap-6">
       <CardLeaguePosition club={club} />
-      <CardTopScorer player={club} />
+      <CardTopScorer club={club} />
       <CardRecent club={club} />
       <CardLastMatchs club={club} />
     </div>

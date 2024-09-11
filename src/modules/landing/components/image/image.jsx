@@ -164,7 +164,7 @@ const FootballLandingComponent = () => {
         <Picture>
           <source
             media="(min-width: 1024px)"
-            srcset="https://www.ole.com.ar/images/2024/09/10/73y8xqt4R_1290x760__2.jpg#1725975491296"
+            srcSet="https://www.ole.com.ar/images/2024/09/10/73y8xqt4R_1290x760__2.jpg#1725975491296"
           />
           <Img
             alt="Una motivación extra: la buena noticia que recibió Willian Pacho desde Francia"

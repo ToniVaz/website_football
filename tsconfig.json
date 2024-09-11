@@ -1,20 +1,25 @@
 {
   "compilerOptions": {
-    "baseUrl": ".", // Establece la raíz del proyecto
+    "baseUrl": ".",
     "paths": {
       "@/*": [
         "./src/*"
-      ] // Define el alias @ para la carpeta src
+      ]
     },
-    "strict": true, // Opcional: para una verificación de tipos más rigurosa
-    "esModuleInterop": true, // Para interoperabilidad con módulos ES6
-    "skipLibCheck": true, // Opcional: para saltar la verificación de bibliotecas
-    "jsx": "react-jsx" // Para React 17+
+    "target": "es2015", // Establece el objetivo de compilación a ES2015 o superior
+    "lib": [
+      "es2015",
+      "dom"
+    ], // Incluye las bibliotecas ES2015 y DOM
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "jsx": "react-jsx"
   },
   "include": [
     "src"
-  ], // Incluye la carpeta src en la compilación
+  ],
   "exclude": [
     "node_modules"
-  ] // Excluye la carpeta node_modules de la compilación
+  ]
 }

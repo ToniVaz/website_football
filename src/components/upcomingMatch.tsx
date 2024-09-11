@@ -5,7 +5,34 @@ import { Calendar, Clock, MapPin } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-export function UpcomingMatch({ club }) {
+// Definición de tipos
+interface ClubColors {
+  nextMatchColor: string;
+  nextMatchColorInfo: string;
+  vsColor: string;
+}
+
+interface Match {
+  date: string;
+  competition: string;
+  homeTeam: string;
+  homeTeamLogo: string;
+  awayTeam: string;
+  awayTeamLogo: string;
+  stadium: string;
+}
+
+interface Club {
+  colors: ClubColors;
+  match: Match;
+}
+
+// Propiedades del componente UpcomingMatch
+interface UpcomingMatchProps {
+  club: Club;
+}
+
+export function UpcomingMatch({ club }: UpcomingMatchProps) {
   const matchDate = new Date(club?.match?.date);
   const [timeLeft, setTimeLeft] = React.useState(
     differenceInSeconds(matchDate, new Date())
@@ -17,7 +44,7 @@ export function UpcomingMatch({ club }) {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [matchDate]); // Asegura que se actualice si matchDate cambia
+  }, [matchDate]);
 
   const days = Math.floor(timeLeft / (24 * 60 * 60));
   const hours = Math.floor((timeLeft % (24 * 60 * 60)) / (60 * 60));
@@ -87,7 +114,7 @@ export function UpcomingMatch({ club }) {
           </div>
           <TeamLogo
             team={club?.match.awayTeam}
-            logo={club?.match.awayTeamLogo}
+            logo={club?.match?.awayTeamLogo}
             color={club?.colors?.nextMatchColorInfo}
           />
         </div>
@@ -103,7 +130,14 @@ export function UpcomingMatch({ club }) {
   );
 }
 
-function TeamLogo({ team, logo, color }) {
+// Propiedades del componente TeamLogo
+interface TeamLogoProps {
+  team: string;
+  logo: string;
+  color: string;
+}
+
+function TeamLogo({ team, logo, color }: TeamLogoProps) {
   return (
     <div className="text-center group">
       <div className="p-2 sm:p-4 mb-4 transition-transform transform group-hover:scale-110">
