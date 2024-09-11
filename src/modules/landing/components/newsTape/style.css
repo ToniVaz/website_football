@@ -1,0 +1,57 @@
+/* Estilos para el texto que titila */
+.live-text {
+  color: #b40000;
+  text-transform: uppercase;
+  margin-right: 5px; /* Ajusta el margen derecho según tus necesidades */
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.responsive-text {
+  font-size: 0.8rem;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+@media (max-width: 1024px) {
+  .responsive-text {
+    font-size: 0.7rem;
+    animation: marquee 15s linear infinite;
+  }
+}
+
+@media (max-width: 768px) {
+  .responsive-text {
+    font-size: 0.7rem;
+    animation: marquee 15s linear infinite;
+  }
+}
+
+@media (max-width: 480px) {
+  .responsive-text {
+    font-size: 0.7rem;
+    animation: marquee 20s linear infinite;
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
